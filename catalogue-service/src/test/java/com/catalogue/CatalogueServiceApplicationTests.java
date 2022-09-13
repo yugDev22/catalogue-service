@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -30,7 +31,7 @@ class CatalogueServiceApplicationTests {
 	@Autowired
 	private ProductDao productDao; 
 	
-	@AfterAll
+	@AfterEach
 	public void tearDown() {
 		productDao.deleteAll();
 	}
@@ -122,18 +123,13 @@ class CatalogueServiceApplicationTests {
 			ArrayList<Product> prod2List = new ArrayList<Product>();
 			prod1List.add(prod2);
 			Mockito.when(productDao1.findByCode("P001")).thenReturn(prod1List);
-			Mockito.when(productDao1.findByCode("I001")).thenReturn(prod2List);
 			
 			assertEquals(prod1, productService.searchProductByCode("P001"));
 		}
 		
 		@Test
 		public void testForSearchProductByCodeMethodNegative() {
-			Product prod1 = new Product(101L,"P001","Poha","Ready to cook poha 100gm",25.00);
-			ArrayList<Product> prod1List = new ArrayList<Product>();
-			prod1List.add(prod1);
 			ArrayList<Product> prod2List = new ArrayList<Product>();
-			Mockito.when(productDao1.findByCode("P001")).thenReturn(prod1List);
 			Mockito.when(productDao1.findByCode("I001")).thenReturn(prod2List);
 			
 			assertEquals(null, productService.searchProductByCode("I001"));
