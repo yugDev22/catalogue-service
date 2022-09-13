@@ -65,7 +65,7 @@ class CatalogueServiceApplicationTests {
 			Product prod2 = new Product(102L,"I001","Idli Rava","Ready to cook idli 100gm",125.00);
 			productDao.save(prod1);
 			productDao.save(prod2);
-			assertEquals(prod1,productDao.findById(101L).orElse(null));
+			assertEquals(prod1,productDao.findByCode("P001").get(0));
 		}	
 		
 		@Test
@@ -73,7 +73,7 @@ class CatalogueServiceApplicationTests {
 			productDao.deleteAll();
 			Product prod1 = new Product(101L,"P001","Poha","Ready to cook poha 100gm",25.00);
 			productDao.save(prod1);
-			assertEquals(null,productDao.findById(102L).orElse(null));
+			assertEquals(new ArrayList<Product>(),productDao.findByCode("I001"));
 		}	
 	}
 	
