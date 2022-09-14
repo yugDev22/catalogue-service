@@ -34,6 +34,10 @@ class CatalogueServiceApplicationTests {
 	@AfterEach
 	public void tearDown() {
 		productDao.deleteAll();
+		Product prod1 = new Product(101L,"P001","Poha","Ready to cook poha 100gm",25.00);
+		Product prod2 = new Product(102L,"I001","Idli Rava","Ready to cook idli 100gm",125.00);
+		productDao.save(prod1);
+		productDao.save(prod2);
 	}
 	
 	@Nested
@@ -59,7 +63,7 @@ class CatalogueServiceApplicationTests {
 		}
 		
 		@Test
-		void testForFindByIdMethodPositiveCase() {
+		void testForFindByCodeMethodPositiveCase() {
 			productDao.deleteAll();
 			Product prod1 = new Product(101L,"P001","Poha","Ready to cook poha 100gm",25.00);
 			Product prod2 = new Product(102L,"I001","Idli Rava","Ready to cook idli 100gm",125.00);
@@ -69,11 +73,11 @@ class CatalogueServiceApplicationTests {
 		}	
 		
 		@Test
-		void testForFindByIdMethodNegativeCase() {
+		void testForFindByCodeMethodNegativeCase() {
 			productDao.deleteAll();
 			Product prod1 = new Product(101L,"P001","Poha","Ready to cook poha 100gm",25.00);
 			productDao.save(prod1);
-			assertEquals(new ArrayList<Product>(),productDao.findByCode("I001"));
+			assertIterableEquals(new ArrayList<Product>(),productDao.findByCode("I001"));
 		}	
 	}
 	
